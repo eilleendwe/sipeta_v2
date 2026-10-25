@@ -23,7 +23,7 @@ layout.inject_css()
 
 try:
     _siapkan()
-except RuntimeError as e:  # pengaturan storage tidak lengkap
+except RuntimeError as e:  # pengaturan database atau storage tidak valid
     st.error(str(e), icon=":material/error:")
     st.stop()
 

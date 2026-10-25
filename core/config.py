@@ -38,8 +38,23 @@ def _pengaturan(nama: str, bawaan: str | None = None) -> str | None:
 def tujuan_db(url: str) -> str:
     """Connection string tanpa kata sandi, untuk dicetak: host:port/nama_database."""
     from psycopg.conninfo import conninfo_to_dict
-    info = conninfo_to_dict(url)
+    try:
+        info = conninfo_to_dict(url)
+    except Exception:
+        return "SIPETA_DB tidak valid"
     return f"{info.get('host', 'localhost')}:{info.get('port', 5432)}/{info.get('dbname', '?')}"
+
+
+def periksa_db_url() -> None:
+    """Pastikan SIPETA_DB bisa dibaca sebagai connection string. Dipanggil sekali saat app dinyalakan,
+    supaya kesalahan tempel (mis. alamat terpotong ke baris baru di Secrets) langsung terlihat jelas."""
+    from psycopg.conninfo import conninfo_to_dict
+    try:
+        conninfo_to_dict(DB_URL)
+    except Exception as e:
+        raise RuntimeError(
+            "Pengaturan SIPETA_DB tidak valid. Biasanya karena alamatnya terpotong ke baris baru atau ada spasi "
+            f"saat ditempel ke Secrets. Tulis ulang dalam satu baris tanpa spasi. Detail: {e}") from None
 
 
 # Bisa diganti tanpa mengubah kode.

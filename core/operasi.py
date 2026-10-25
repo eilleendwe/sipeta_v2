@@ -24,7 +24,7 @@ from rasterio.io import MemoryFile
 
 from core import citra, db, jobs, klasifikasi, latih, peta_tahunan, storage
 from core.config import (CACHE_TAHUNAN_DIR, CITRA_DIR, HASIL_DIR, LABEL_NODATA, MODEL_DIR, PREDIKSI_DIR,
-                         TANGGAL_MAKS, TANGGAL_MIN, TMP_DIR)
+                         TANGGAL_MAKS, TANGGAL_MIN, TMP_DIR, periksa_db_url)
 from core.jobs import ProsesError
 
 # Berkas unggahan: (nama berkas beserta subfolder, mis. "2019-07-04/T48_B02_10m.tif", isi).
@@ -33,7 +33,8 @@ Unggahan = list[tuple[str, bytes]]
 
 def siapkan() -> None:
     """Sekali saat app dinyalakan: sisa unggahan dan hasil yang belum disimpan dari sesi
-    sebelumnya dibuang, folder dibuat, dan pengaturan storage diperiksa."""
+    sebelumnya dibuang, folder dibuat, dan pengaturan database serta storage diperiksa."""
+    periksa_db_url()
     storage.periksa()
     shutil.rmtree(TMP_DIR, ignore_errors=True)
     for folder in (TMP_DIR, MODEL_DIR, HASIL_DIR, CITRA_DIR, PREDIKSI_DIR):
