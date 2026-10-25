@@ -1,0 +1,8 @@
+venv/
+storage/
+**/__pycache__/
+.streamlit/secrets.toml
+.claude/
+.vscode/
+.git/
+cloud.ps1

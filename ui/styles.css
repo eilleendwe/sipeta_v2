@@ -1,0 +1,498 @@
+/* SIPETA — CSS kustom di atas tema .streamlit/config.toml.
+   Struktur mengikuti wireframe: sidebar abu-abu, kartu putih bersudut membulat,
+   strip tab abu-abu di puncak kartu. */
+
+:root {
+  --sp-ink: #1e2a32;
+  --sp-ink-soft: #55636e;
+  --sp-line: #c3ccd2;
+  --sp-strip: #e3e8ea;
+  --sp-card: #ffffff;
+  --sp-teal: #0e7c7b;
+  --sp-teal-soft: #d9ecea;
+  --sp-green: #6b8f71;
+  --sp-green-soft: #e3ece2;
+  --sp-built: #b4583a;
+  --sp-amber: #9a6b12;
+  --sp-amber-soft: #f4e9cf;
+  --sp-red: #a63d32;
+  --sp-red-soft: #f6dfdb;
+  --sp-radius: 14px;
+}
+
+.material-symbols-rounded {
+  font-family: "Material Symbols Rounded";
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Kanvas utama ------------------------------------------------------- */
+
+[data-testid="stMainBlockContainer"] {
+  padding: 2.5rem 2.5rem 3rem;
+  max-width: 1360px;
+}
+[data-testid="stHeader"] { background: transparent; }
+
+[data-testid="stMainBlockContainer"] h1 {
+  padding: 0 0 0.7rem 0;
+  letter-spacing: -0.01em;
+}
+
+/* --- Kartu -------------------------------------------------------------- */
+
+[class*="st-key-card_"] {
+  background: var(--sp-card);
+  border: 1px solid var(--sp-line);
+  border-radius: var(--sp-radius);
+  padding: 1.25rem 1.5rem 1.5rem;
+  box-shadow: 0 1px 2px rgba(30, 42, 50, 0.04);
+}
+
+/* --- Bilah tab di puncak kartu ------------------------------------------ */
+
+/* Strip melebar sampai tepi kartu: margin negatif dipasang di pembungkus tata letak. */
+[data-testid="stLayoutWrapper"]:has(> [class*="st-key-tabbar_"]) {
+  margin: -1.25rem -1.5rem 0.5rem;
+  width: calc(100% + 3rem);
+  max-width: none;
+}
+[class*="st-key-tabbar_"] {
+  padding: 0.55rem 1.5rem;
+  background: var(--sp-strip);
+  border-bottom: 1px solid var(--sp-line);
+  border-radius: calc(var(--sp-radius) - 1px) calc(var(--sp-radius) - 1px) 0 0;
+}
+[class*="st-key-tab_"] a {
+  background: transparent !important;
+  padding: 0.3rem 0.1rem;
+  border-radius: 0;
+  border-bottom: 2px solid transparent;
+}
+[class*="st-key-tab_"] a p {
+  font-size: 1.08rem;
+  color: var(--sp-ink-soft);
+  font-weight: 400;
+}
+[class*="st-key-tab_off_"] a:hover p { color: var(--sp-ink); }
+[class*="st-key-tab_on_"] a { border-bottom-color: var(--sp-teal); }
+[class*="st-key-tab_on_"] a p {
+  color: var(--sp-ink);
+  font-weight: 700;
+}
+
+/* Panduan Pengguna memakai st.tabs biasa; tampilannya disamakan dengan strip di atas. */
+.st-key-card_panduan [role="tablist"] {
+  margin: -1.25rem -1.5rem 0.9rem;
+  padding: 0.5rem 1.5rem 0;
+  gap: 1.6rem;
+  background: var(--sp-strip);
+  border-bottom: 1px solid var(--sp-line);
+  border-radius: calc(var(--sp-radius) - 1px) calc(var(--sp-radius) - 1px) 0 0;
+}
+.st-key-card_panduan [role="tab"] { padding-bottom: 0.55rem; }
+.st-key-card_panduan [role="tab"] p { font-size: 1.08rem; color: var(--sp-ink-soft); }
+.st-key-card_panduan [role="tab"][aria-selected="true"] p { font-weight: 700; color: var(--sp-ink); }
+.st-key-card_panduan [data-testid="stMarkdownContainer"] li { margin-bottom: 0.15rem; }
+
+/* --- Sidebar ------------------------------------------------------------ */
+
+[data-testid="stSidebar"] { min-width: 268px; max-width: 268px; }
+[data-testid="stSidebarHeader"] { height: 1.5rem; min-height: 1.5rem; padding: 0; }
+/* Isi sidebar mengisi tinggi layar lewat flex (bukan min-height 100vh, yang
+   menambah beberapa piksel di atas tinggi layar sehingga muncul scroll). */
+[data-testid="stSidebarContent"] { display: flex; flex-direction: column; }
+[data-testid="stSidebarUserContent"] {
+  padding: 0.5rem 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+[data-testid="stSidebarUserContent"] > div { flex: 1; display: flex; flex-direction: column; }
+[data-testid="stSidebarUserContent"] > div > [data-testid="stVerticalBlock"] { flex: 1; }
+
+.sp-brand { padding: 0.75rem 0.5rem 1rem; }
+.sp-brand-name {
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--sp-ink);
+  line-height: 1.1;
+}
+.sp-brand-sub {
+  margin-top: 0.3rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--sp-ink-soft);
+}
+
+/* Streamlit memberi tautan halaman margin vertikal negatif, sehingga item menu
+   saling menimpa. Margin itu dinolkan, lalu jarak antar item diatur lewat gap. */
+.st-key-sidenav { gap: 0.3rem; }
+[class*="st-key-nav_"] [data-testid="stElementContainer"] { margin-top: 0; margin-bottom: 0; }
+[class*="st-key-nav_"] a {
+  margin: 0;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  background: transparent !important;
+}
+[class*="st-key-nav_"] a p { color: var(--sp-ink); font-weight: 400; }
+[class*="st-key-nav_"] a:hover { background: rgba(30, 42, 50, 0.07) !important; }
+
+[class*="st-key-nav_top_on_"] a p { font-weight: 600; }
+[class*="st-key-nav_sub_"] a { margin-left: 1.5rem; padding: 0.42rem 0.6rem; }
+[class*="st-key-nav_sub_"] a p { font-size: 0.93rem; }
+[class*="st-key-nav_sub_"] a [data-testid="stIconMaterial"] { font-size: 0.8rem; }
+[class*="st-key-nav_sub_on_"] a { background: #ffffff !important; box-shadow: inset 3px 0 0 var(--sp-teal); }
+[class*="st-key-nav_sub_on_"] a p { font-weight: 600; }
+/* Item tunggal (bukan induk grup) yang aktif. */
+.st-key-nav_top_on_beranda a,
+.st-key-nav_top_on_pemantauan a,
+.st-key-nav_top_on_panduan a,
+.st-key-nav_top_on_tentang a,
+.st-key-nav_top_on_kelola_pengguna a {
+  background: #ffffff !important;
+  box-shadow: inset 3px 0 0 var(--sp-teal);
+}
+
+/* Blok pengguna menempel di dasar sidebar. */
+[data-testid="stLayoutWrapper"]:has(> .st-key-sidefoot) { margin-top: auto; }
+.st-key-sidefoot {
+  padding-top: 0.9rem;
+  border-top: 1px solid #b4bec5;
+}
+.sp-user { padding: 0 0.3rem; }
+.sp-user-name { font-weight: 600; color: var(--sp-ink); line-height: 1.25; }
+.sp-user-mail { font-size: 0.8rem; color: var(--sp-ink-soft); margin-bottom: 0.4rem; word-break: break-all; }
+.sp-demo {
+  font-size: 0.74rem;
+  letter-spacing: 0.02em;
+  color: var(--sp-amber);
+  background: var(--sp-amber-soft);
+  border: 1px dashed #cfae62;
+  border-radius: 6px;
+  padding: 0.3rem 0.5rem;
+  text-align: center;
+}
+
+/* --- Lencana ------------------------------------------------------------ */
+
+.sp-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  padding: 0.28rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.sp-pill-ic { font-size: 0.95rem; }
+.sp-pill-slate { color: #3f4c57; background: #e3e8ea; border-color: #c3ccd2; }
+.sp-pill-teal { color: #0a5f5e; background: var(--sp-teal-soft); border-color: #a9d3cf; }
+.sp-pill-green { color: #3f6146; background: var(--sp-green-soft); border-color: #b9cdb8; }
+.sp-pill-amber { color: var(--sp-amber); background: var(--sp-amber-soft); border-color: #dcc48a; }
+.sp-pill-red { color: var(--sp-red); background: var(--sp-red-soft); border-color: #e2b2ab; }
+
+/* --- Landing, Login, Register ------------------------------------------- */
+
+.st-key-landing_nav {
+  padding: 0.35rem 0 0.9rem;
+  border-bottom: 1px solid rgba(30, 42, 50, 0.12);
+}
+.sp-land-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--sp-ink);
+}
+.sp-land-brand .sp-logo { width: 1.5rem; height: 1.5rem; }
+.st-key-landing_nav a p { font-weight: 500; }
+
+.st-key-landing_hero { min-height: 64vh; justify-content: center; padding: 1.5rem 0 1rem; }
+.sp-hero-kicker {
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sp-teal);
+  font-weight: 600;
+}
+.sp-hero-title {
+  font-size: clamp(2rem, 3.8vw, 3.1rem);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  color: var(--sp-ink);
+  max-width: 18ch;
+  margin: 0.7rem 0 0.9rem;
+  padding: 0;
+}
+.sp-hero-sub { color: var(--sp-ink-soft); font-size: 1.02rem; line-height: 1.65; max-width: 52ch; margin: 0 0 0.4rem; }
+.sp-hero-wilayah { font-size: 0.84rem; color: var(--sp-ink-soft); margin-top: 0.4rem; }
+
+/* Logo SIPETA (ui/logo.svg). Ukuran ikut font-size kelas pembungkusnya. */
+.sp-logo { display: block; width: 1.15em; height: 1.15em; flex: none; }
+.sp-brand-name, .sp-auth-brand { display: flex; align-items: center; gap: 0.4rem; }
+.sp-auth-brand .sp-logo { width: 1.6em; height: 1.6em; }
+
+/* Logo di hero dibungkus lingkaran dengan cincin orbit putus-putus. */
+.sp-hero-logo {
+  width: min(340px, 80%);
+  aspect-ratio: 1;
+  margin: 0 auto;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 45%, #ffffff 0%, var(--sp-teal-soft) 100%);
+  border: 1px solid #a9d3cf;
+  outline: 1px dashed rgba(14, 124, 123, 0.35);
+  outline-offset: 18px;
+  box-shadow: 0 18px 40px rgba(30, 42, 50, 0.1);
+}
+.sp-hero-logo-img { width: 52%; height: auto; display: block; filter: drop-shadow(0 8px 14px rgba(30, 42, 50, 0.14)); }
+
+.sp-land-footer {
+  text-align: center;
+  padding: 0.9rem 0 0.2rem;
+  border-top: 1px solid rgba(30, 42, 50, 0.12);
+  font-size: 0.82rem;
+  color: var(--sp-ink-soft);
+}
+
+@media (max-width: 760px) {
+  .st-key-landing_hero { min-height: auto; }
+  .sp-hero-logo { width: 200px; margin-top: 1.5rem; }
+}
+
+/* Masuk dan Daftar: kartu di tengah layar, vertikal dan horizontal. */
+[data-testid="stMainBlockContainer"]:has([class*="st-key-card_auth"]) {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+[data-testid="stMainBlockContainer"]:has([class*="st-key-card_auth"]) > [data-testid="stVerticalBlock"] {
+  justify-content: center;
+}
+
+[class*="st-key-card_auth"] { padding: 1.75rem 1.9rem 1.6rem; }
+/* Petunjuk "Press Enter to submit form" di field Login dan Daftar disembunyikan. */
+[class*="st-key-card_auth"] [data-testid="InputInstructions"] { display: none; }
+.sp-auth-brand { font-size: 0.8rem; letter-spacing: 0.14em; color: var(--sp-teal); font-weight: 600; }
+.sp-auth-title { font-size: 1.5rem; font-weight: 600; margin: 0.15rem 0 0.2rem; color: var(--sp-ink); }
+.sp-auth-sub { color: var(--sp-ink-soft); font-size: 0.92rem; }
+.sp-field-error { color: var(--sp-red); font-size: 0.82rem; margin-top: -0.55rem; }
+
+/* --- Akses ditolak ------------------------------------------------------ */
+
+.sp-denied { text-align: center; padding: 2.2rem 1rem 0.4rem; }
+.sp-denied-ic { font-size: 2.6rem; color: var(--sp-red); }
+.sp-denied h2 { font-size: 1.3rem; margin: 0.5rem 0 0.4rem; color: var(--sp-ink); }
+.sp-denied p { color: var(--sp-ink-soft); max-width: 46ch; margin: 0 auto; }
+
+/* --- Teks dalam kartu --------------------------------------------------- */
+
+.sp-lead { font-size: 1.3rem; font-weight: 500; color: var(--sp-ink); margin: 0.2rem 0 0.6rem; }
+.sp-body { color: #33414b; line-height: 1.65; max-width: 78ch; }
+.sp-muted { color: var(--sp-ink-soft); font-size: 0.88rem; }
+.sp-section {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sp-ink-soft);
+  margin: 0.2rem 0 0.1rem;
+}
+
+/* --- Tabel Kelola Pengguna ---------------------------------------------- */
+
+.st-key-user_head { border-bottom: 1px solid var(--sp-line); padding-bottom: 0.35rem; }
+[class*="st-key-user_row_"] { border-bottom: 1px solid #e6eaec; padding: 0.3rem 0; }
+.sp-cell { line-height: 2.4rem; color: var(--sp-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sp-cell-soft { color: var(--sp-ink-soft); }
+
+/* --- Blok isi kartu ------------------------------------------------------ */
+
+.sp-empty {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--sp-ink-soft);
+  background: #f4f6f7;
+  border: 1px dashed var(--sp-line);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  font-size: 0.93rem;
+}
+.sp-empty-ic { font-size: 1.4rem; color: #8493a0; }
+
+.sp-metrics { display: grid; gap: 0.6rem; }
+.sp-metric {
+  border: 1px solid var(--sp-line);
+  border-left: 3px solid var(--sp-teal);
+  border-radius: 8px;
+  padding: 0.55rem 0.75rem 0.6rem;
+  background: #fbfcfc;
+}
+.sp-metric-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sp-ink-soft);
+}
+.sp-metric-value {
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: var(--sp-ink);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.25;
+}
+
+.sp-facts { margin: 0; display: grid; gap: 0.3rem; }
+.sp-facts > div { display: flex; gap: 0.4rem; align-items: baseline; flex-wrap: wrap; }
+.sp-facts dt { color: var(--sp-ink-soft); font-size: 0.9rem; }
+.sp-facts dt::after { content: ":"; }
+.sp-facts dd { margin: 0; color: var(--sp-ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.sp-legend { display: flex; flex-wrap: wrap; gap: 0.35rem 1.1rem; font-size: 0.86rem; color: var(--sp-ink); }
+.sp-legend-item { display: inline-flex; align-items: center; gap: 0.4rem; }
+.sp-swatch { width: 0.85rem; height: 0.85rem; border-radius: 3px; border: 1px solid rgba(30, 42, 50, 0.25); }
+
+.sp-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+/* Kanvas raster: bingkai tipis seperti area peta. */
+[class*="st-key-kanvas_"] [data-testid="stImage"] img {
+  border: 1px solid var(--sp-line);
+  border-radius: 8px;
+  background: #eef1f2;
+  /* Raster diperbesar tanpa penghalusan: tiap piksel 10 m tampil sebagai kotak tegas. */
+  image-rendering: pixelated;
+}
+
+/* Selisih bertanda (+/−) dengan warna: naik = terakota (lahan terbangun bertambah),
+   turun = biru, tetap = abu. Tanda tetap tertulis, jadi tidak bergantung pada warna. */
+.sp-delta { font-size: 1.15rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.sp-delta span { font-size: 0.88rem; font-weight: 400; color: var(--sp-ink-soft); }
+.sp-delta-naik { color: #a44a2c; }
+.sp-delta-turun { color: #1f6f9f; }
+.sp-delta-tetap { color: var(--sp-ink-soft); }
+.sp-delta-besar { font-size: 1.7rem; line-height: 1.3; }
+.sp-delta-besar span { font-size: 0.92rem; }
+
+/* dl bawaan Streamlit punya indentasi; daftar fakta rata kiri dengan isi kartu. */
+dl.sp-facts, dl.sp-facts dt, dl.sp-facts dd { margin: 0 !important; padding: 0 !important; }
+
+/* Lencana berteks panjang boleh turun baris di kolom sempit. */
+.sp-pill-wrap { white-space: normal; border-radius: 10px; line-height: 1.3; }
+
+/* --- Tentang Penulis ------------------------------------------------------ */
+
+.sp-authors { display: flex; justify-content: space-around; gap: 1.5rem; flex-wrap: wrap; padding: 1.2rem 0 0.6rem; }
+.sp-author { text-align: center; width: 13rem; }
+.sp-avatar {
+  width: 9.5rem;
+  height: 9.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 0.9rem;
+  display: block;
+  border: 1px solid var(--sp-line);
+}
+.sp-avatar-inisial {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sp-strip);
+  color: var(--sp-ink-soft);
+  font-size: 2.6rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+.sp-author-name { font-weight: 600; color: var(--sp-ink); line-height: 1.35; }
+.sp-author-role { font-size: 0.88rem; color: var(--sp-ink-soft); margin-top: 0.15rem; }
+.sp-judul {
+  font-size: 1.15rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--sp-ink);
+  max-width: 80ch;
+  padding: 0.2rem 0 0.2rem 1rem;
+  border-left: 3px solid var(--sp-teal);
+  margin: 0.2rem 0 0.8rem;
+}
+
+/* --- Beranda -------------------------------------------------------------- */
+
+.sp-alur {
+  list-style: none;
+  margin: 0.3rem 0 0 !important;
+  padding: 0 !important;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.75rem;
+  counter-reset: alur;
+}
+.sp-alur li {
+  counter-increment: alur;
+  position: relative;
+  border: 1px solid var(--sp-line);
+  border-radius: 10px;
+  padding: 0.8rem 0.9rem 0.85rem;
+  background: #fbfcfc;
+}
+.sp-alur li::before {
+  content: counter(alur, decimal-leading-zero);
+  position: absolute;
+  top: 0.75rem;
+  right: 0.9rem;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: #9aa6af;
+}
+.sp-alur-ic { font-size: 1.35rem; color: var(--sp-teal); display: block; margin-bottom: 0.35rem; }
+.sp-alur b { color: var(--sp-ink); font-weight: 600; }
+.sp-alur p { margin: 0.25rem 0 0; font-size: 0.86rem; line-height: 1.5; color: var(--sp-ink-soft); }
+
+.st-key-beranda_peta [data-testid="stImage"] img {
+  border: 1px solid var(--sp-line);
+  border-radius: 8px;
+}
+.sp-kec-list { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.sp-kec-list span {
+  font-size: 0.82rem;
+  color: #3f4c57;
+  background: #f1f4f5;
+  border: 1px solid #dde3e6;
+  border-radius: 6px;
+  padding: 0.18rem 0.5rem;
+}
+
+[class*="st-key-beranda_mulai_"] {
+  border: 1px solid var(--sp-line);
+  border-radius: 10px;
+  padding: 0.55rem 0.8rem 0.6rem;
+  gap: 0;
+  height: 100%;
+}
+[class*="st-key-beranda_mulai_"]:hover { border-color: var(--sp-teal); }
+[class*="st-key-beranda_mulai_"] a { padding-left: 0; background: transparent !important; }
+[class*="st-key-beranda_mulai_"] a p { font-weight: 600; color: var(--sp-ink); }
+[class*="st-key-beranda_mulai_"] [data-testid="stCaptionContainer"] { margin-top: -0.2rem; }
